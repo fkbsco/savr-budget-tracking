@@ -4,6 +4,8 @@ import {Row, Col, Card, Button, Alert, Form} from 'react-bootstrap';
 import Router from 'next/router'
 import Head from 'next/head'
 
+import DatePicker from "react-datepicker";
+
 import UserContext from '../UserContext'
 
 const AddTransaction = () => {
@@ -13,12 +15,18 @@ const AddTransaction = () => {
 	const [type, setType] = useState('');
     const [amount, setAmount] = useState(0);
 	const [category, setCategory] = useState('');
+	const [startDate, setStartDate] = useState(new Date());
 	const [isEnabled, setIsEnabled] = useState(false);
 
-	function recordTransaction(details, data) {
+	const ExampleCustomInput = ({ value, onClick }) => (
+		<button className="example-custom-input" onClick={onClick}>
+		  {value}
+		</button>
+	  );
 
-		console.log(details)
-		console.log(data)
+	function recordTransaction(e) {
+
+		console.log(e)
 
 		fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/transactions`, {
 			method: 'POST',
@@ -29,7 +37,8 @@ const AddTransaction = () => {
 			body: JSON.stringify({
                 type: type,
                 amount: amount,
-                category: category
+				category: category,
+				date: startDate
 			})
 		})
 		.then(res => res.json())
@@ -43,17 +52,37 @@ const AddTransaction = () => {
 	}
 
 	useEffect(() => {
-		if (type !== '' && amount !== 0 && category !== 0)
-	})
+		if (type !== '' && amount !== 0 && category !== '') {
+			setIsEnabled(true)
+		} else {
+			setIsEnabled(false)
+		}
+	}, [type, amount, category])
 
 	return (
 		<React.Fragment>
 			 <Form onSubmit={e => recordTransaction(e)}>
-				<Form.Group controlId="Type">
-					<div onChange={(e) => setType(e.target)}>
-						<input type="radio" value="Income" name="transactiontype" /> Income
-						<input type="radio" value="Expense" name="transactiontype" /> Expense
-					</div>
+				<Form.Group controlId="Type" onChange={(e) => setType(e.target.value)}>
+				<Form.Check
+					type="radio"
+					value="Income"
+					label="Income"
+					name="category"
+				/>
+				<Form.Check
+					type="radio"
+					value="Expense"
+					label="Expense"
+					name="category"
+				/>
+				</Form.Group>
+
+				<Form.Group>
+				<DatePicker
+					selected={startDate}
+					onChange={(e) => setStartDate(e.target.value)}
+					customInput={<ExampleCustomInput />}
+				/>
 				</Form.Group>
 
 				<Form.Group controlId="amount">
@@ -63,6 +92,17 @@ const AddTransaction = () => {
 						placeholder="Amount" 
 						value={amount}
 						onChange={(e) => setAmount(e.target.value)}
+						required
+					/>
+				</Form.Group>
+
+				<Form.Group controlId="amount">
+					<Form.Label>Category</Form.Label>
+					<Form.Control 
+						type="text" 
+						placeholder="Category" 
+						value={category}
+						onChange={(e) => setCategory(e.target.value)}
 						required
 					/>
 				</Form.Group>

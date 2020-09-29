@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { UserProvider } from '../UserContext'
 
+import "react-datepicker/dist/react-datepicker.css";
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }) {
