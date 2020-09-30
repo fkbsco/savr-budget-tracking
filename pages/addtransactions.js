@@ -5,6 +5,7 @@ import Router from 'next/router'
 import Head from 'next/head'
 
 import DatePicker from "react-datepicker";
+import moment from 'moment';
 
 import UserContext from '../UserContext'
 
@@ -15,7 +16,7 @@ const AddTransaction = () => {
 	const [type, setType] = useState('');
     const [amount, setAmount] = useState(0);
 	const [category, setCategory] = useState('');
-	const [startDate, setStartDate] = useState(new Date());
+	const [date, setDate] = useState(new Date());
 	const [isEnabled, setIsEnabled] = useState(false);
 
 	const ExampleCustomInput = ({ value, onClick }) => (
@@ -25,6 +26,8 @@ const AddTransaction = () => {
 	  );
 
 	function recordTransaction(e) {
+
+		e.preventDefault()
 
 		console.log(e)
 
@@ -38,7 +41,7 @@ const AddTransaction = () => {
                 type: type,
                 amount: amount,
 				category: category,
-				date: startDate
+				date: moment(date)
 			})
 		})
 		.then(res => res.json())
@@ -62,7 +65,7 @@ const AddTransaction = () => {
 	return (
 		<React.Fragment>
 			 <Form onSubmit={e => recordTransaction(e)}>
-				<Form.Group controlId="Type" onChange={(e) => setType(e.target.value)}>
+				<Form.Group controlId="type" onChange={(e) => setType(e.target.value)}>
 				<Form.Check
 					type="radio"
 					value="Income"
@@ -79,8 +82,8 @@ const AddTransaction = () => {
 
 				<Form.Group>
 				<DatePicker
-					selected={startDate}
-					onChange={(e) => setStartDate(e.target.value)}
+					selected={date}
+					onChange={date => setDate(date)}
 					customInput={<ExampleCustomInput />}
 				/>
 				</Form.Group>
@@ -96,7 +99,7 @@ const AddTransaction = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group controlId="amount">
+				<Form.Group controlId="category">
 					<Form.Label>Category</Form.Label>
 					<Form.Control 
 						type="text" 

@@ -31,7 +31,7 @@ export default function history({data}) {
                 <td>{data.type}</td>
                 <td>{data.amount}</td>
                 <td>{data.category}</td>
-				<td>{moment(data.transactionDate).format('MMMM DD YYYY')}</td>
+				<td>{moment(data.date).utc().format('MMMM DD YYYY')}</td>
 			</tr>
 		)
 	})
