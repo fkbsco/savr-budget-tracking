@@ -4,6 +4,7 @@ import { UserProvider } from '../UserContext'
 
 import "react-datepicker/dist/react-datepicker.css";
 import '../styles/globals.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState({

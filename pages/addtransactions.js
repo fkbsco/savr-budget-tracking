@@ -1,5 +1,5 @@
 import {useEffect, useState, useRef, useContext} from 'react';
-import {Row, Col, Card, Button, Alert, Form} from 'react-bootstrap';
+import {Row, Col, Card, Button, Alert, Form, Dropdown, DropdownButton} from 'react-bootstrap';
 
 import Router from 'next/router'
 import Head from 'next/head'
@@ -18,6 +18,8 @@ const AddTransaction = () => {
 	const [category, setCategory] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [isEnabled, setIsEnabled] = useState(false);
+	const [categoriesArray, setCategoriesArray] = useState([]);
+	const [searchbar, setSearchBar] = useState('');
 
 	const ExampleCustomInput = ({ value, onClick }) => (
 		<button className="example-custom-input" onClick={onClick}>
@@ -54,6 +56,15 @@ const AddTransaction = () => {
 		})
 	}
 
+	function categories(e) {
+		setType(e.target.value)
+		if (e.target.value === "Income") {
+			setCategoriesArray(['salary', 'dividends', 'investment'])
+		} else {
+			setCategoriesArray(['bills', 'travel', 'food'])
+		}
+	}
+
 	useEffect(() => {
 		if (type !== '' && amount !== 0 && category !== '') {
 			setIsEnabled(true)
@@ -65,7 +76,7 @@ const AddTransaction = () => {
 	return (
 		<React.Fragment>
 			 <Form onSubmit={e => recordTransaction(e)}>
-				<Form.Group controlId="type" onChange={(e) => setType(e.target.value)}>
+				<Form.Group controlId="type" onChange={(e) => categories(e)}>
 				<Form.Check
 					type="radio"
 					value="Income"
@@ -109,6 +120,17 @@ const AddTransaction = () => {
 						required
 					/>
 				</Form.Group>
+				
+				{/* <Form.Group>
+					<DropdownButton id="category dropdown" title="Category">
+					{categoriesArray.map(category => {
+						return (
+							<Dropdown.Item value={category} selected={category}>{category}</Dropdown.Item>
+						)
+					})}
+					</DropdownButton>
+				</Form.Group> */}
+				
 
 				<Button className="bg-primary" type="submit">
 					Submit
