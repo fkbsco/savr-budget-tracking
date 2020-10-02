@@ -11,8 +11,7 @@ export default function history({data}) {
 	const [searchResults, setSearchResults] = useState([]);
 	const [searchItem, setSearchItem] = useState([]);
 	const handleChange = e => {
-		setSearchTerm(e.target.value);
-		dynamicSearch()
+		setSearchTerm(e.target.value).then(dynamicSearch())
 	}
 
     useEffect(() => {
@@ -23,7 +22,7 @@ export default function history({data}) {
 		})
 		.then(res => res.json())
 		.then(data => {
-            console.log(data)
+            console.log(data.transactions)
 			if (data._id){
 				setOverview(data.transactions)
 			} else {
@@ -34,10 +33,32 @@ export default function history({data}) {
 	
 	const dynamicSearch = () => {
 		const searchItem = overview.filter(record => 
-			record.category.toLowerCase().includes(searchTerm.toLowerCase()))
+			record.category.toLowerCase().includes(searchTerm))
 		console.log(searchItem)
 		setSearchItem(searchItem)
+
+		// fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/searchrecord`, {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			'Authorization': `Bearer ${localStorage.getItem('token')}`,
+		// 			'Content-Type': 'application/json'
+		// 		},
+		// 		body: JSON.stringify({
+		// 			searchTerm: searchTerm	
+		// 		})
+		// })
+		// .then(res => res.json())
+		// .then(data => {
+		// 	// setSearchItem(data)
+		// 	console.log(data)
+		// })
 	}
+
+	// useEffect(() => {
+	// 	if (searchTerm !== '') {
+	// 		dynamicSearch()
+	// 	}
+	// }, [searchTerm])
 
 	const filtered = searchItem.map(data => {
 		return (
