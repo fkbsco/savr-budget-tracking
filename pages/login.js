@@ -1,20 +1,17 @@
 import { useState, useContext } from 'react'
-import { Form, Button, Card, Row, Col } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import {GoogleLogin} from 'react-google-login';
 
 import Router from 'next/router'
-import Head from 'next/head'
+import Link from 'next/link'
+
+import OnePageFooter from '../components/OnePageFooter'
 
 import UserContext from '../UserContext'
 
 export default function index() {
     return(
-        <Row className="justify-content-center">
-            <Col xs md="6">
-                <h3>Login</h3>
-                <LoginForm/>
-            </Col>
-        </Row>
+        <LoginForm/>
     )
 }
 
@@ -92,54 +89,66 @@ const LoginForm = () => {
                 id: data._id
             })
 
-            Router.push('/addtransactions')
+            Router.push('/transactions')
         })
     }
 
     return (
         <React.Fragment>
-            <Card>
-                <Card.Header>Login Details</Card.Header>
-                <Card.Body>
+            <div className="loginformcontainer">
+                <div className="formhead">Login</div>
                     <Form onSubmit={e => authenticate(e)}>
                         <Form.Group controlId="userEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control 
+                        <Form.Label className="form-label">Email address</Form.Label>
+                            <div className="cont">
+                            <input
                                 type="email" 
-                                placeholder="Enter email" 
+                                className="effect-2"
+                                placeholder="Enter email address" 
                                 value={email}
-                            	onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
+                            <span class="focus-border"></span>
+                            </div>
+                            
                         </Form.Group>
 
                         <Form.Group controlId="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control 
+                        <Form.Label className="form-label">Password</Form.Label>
+                            <div className="cont">
+                            <input
+                                className="effect-2"
                                 type="password" 
-                                placeholder="Password" 
+                                placeholder="Enter password" 
                                 value={password}
-                            	onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            <span class="focus-border"></span>
+                            </div>
                         </Form.Group>
 
-                        <Button className="bg-primary" type="submit">
-                            Submit
-                        </Button>
+                        <Button id="submitform" type="submit" style={{display: "none"}}>Submit</Button>
+                        <center><label className="submitfrmbtn" htmlFor="submitform">Submit</label></center>
 
-                        <GoogleLogin
+                        <p className="formsubhead">Don't have an account? &nbsp;
+                            <Link href="/signup">
+                                <a className="link">Sign Up</a>
+                            </Link>
+                        </p>
+                        <hr/>
+                        <div className="formsubhead">Login using a different account:</div>
+                        <center><GoogleLogin
                             clientId="630619352860-ctgb783qpab5o9rp3hurl6nb5tb73imh.apps.googleusercontent.com"
-                            buttonText="Login"
                             onSuccess={authenticateGoogleToken}
                             onFailure={authenticateGoogleToken}
                             cookiePolicy={'single_host_origin'}
-                            className="w-100 text-center d-flex justify-content-center"
-                        />
-
+                            className="googlebtn"
+                        /></center>
                     </Form>
-                </Card.Body>
-            </Card>
+                </div>
+            <OnePageFooter />
         </React.Fragment>
     )
 }

@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { UserProvider } from '../UserContext'
 
-import "react-datepicker/dist/react-datepicker.css";
 import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+
+import NavBar from '../components/NavBar'
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState({
@@ -42,9 +43,8 @@ export default function App({ Component, pageProps }) {
   return (
       <React.Fragment>
           <UserProvider value={{user, setUser, unsetUser}}>
-              <Container>
-                  <Component {...pageProps} />
-              </Container>
+            <NavBar />
+            <Component {...pageProps} />
           </UserProvider>
       </React.Fragment>
   )

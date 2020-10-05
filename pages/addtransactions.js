@@ -1,13 +1,15 @@
 import {useEffect, useState, useRef, useContext} from 'react';
-import {Row, Col, Card, Button, Alert, Form, Dropdown, DropdownButton} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 
 import Router from 'next/router'
-import Head from 'next/head'
+import Link from 'next/link'
 
-import DatePicker from "react-datepicker";
 import moment from 'moment';
 
 import UserContext from '../UserContext'
+
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 const AddTransaction = () => {
 	
@@ -16,16 +18,24 @@ const AddTransaction = () => {
 	const [type, setType] = useState('');
     const [amount, setAmount] = useState(0);
 	const [category, setCategory] = useState('');
+	const [description, setDescription] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [isEnabled, setIsEnabled] = useState(false);
-	const [categoriesArray, setCategoriesArray] = useState([]);
-	const [searchbar, setSearchBar] = useState('');
 
-	const ExampleCustomInput = ({ value, onClick }) => (
-		<button className="example-custom-input" onClick={onClick}>
-		  {value}
-		</button>
-	  );
+	const useStyles = makeStyles((theme) => ({
+		container: {
+		  display: 'flex',
+		  flexWrap: 'wrap',
+		},
+		textField: {
+		  marginLeft: theme.spacing(1),
+		  marginRight: theme.spacing(1),
+		  width: 200,
+		},
+	  }));
+	
+	  const classes = useStyles();
+	
 
 	function recordTransaction(e) {
 
@@ -43,7 +53,8 @@ const AddTransaction = () => {
                 type: type,
                 amount: amount,
 				category: category,
-				date: moment(date)
+				date: moment(date),
+				description: description
 			})
 		})
 		.then(res => res.json())
@@ -55,15 +66,7 @@ const AddTransaction = () => {
 			}
 		})
 	}
-
-	function categories(e) {
-		setType(e.target.value)
-		if (e.target.value === "Income") {
-			setCategoriesArray(['salary', 'dividends', 'investment'])
-		} else {
-			setCategoriesArray(['bills', 'travel', 'food'])
-		}
-	}
+	console.log(date)
 
 	useEffect(() => {
 		if (type !== '' && amount !== 0 && category !== '') {
@@ -75,68 +78,99 @@ const AddTransaction = () => {
 
 	return (
 		<React.Fragment>
-			 <Form onSubmit={e => recordTransaction(e)}>
-				<Form.Group controlId="type" onChange={(e) => categories(e)}>
-				<Form.Check
-					type="radio"
-					value="Income"
-					label="Income"
-					name="category"
-				/>
-				<Form.Check
-					type="radio"
-					value="Expense"
-					label="Expense"
-					name="category"
-				/>
-				</Form.Group>
+			<div className="loginformcontainer">
+				<div className="formhead">Add Transaction</div>
+					<Form onSubmit={e => recordTransaction(e)}>
+						<Form.Label className="form-label">Type:</Form.Label>
+							<Form.Group controlId="type" onChange={(e) => setType(e.target.value)}>
+							<div className="cont">
+								<Form.Check
+									type="radio"
+									value="Income"
+									label="Income"
+									name="category"
+								/>
+								<Form.Check
+									type="radio"
+									value="Expense"
+									label="Expense"
+									name="category"
+								/>
+							</div>
+							</Form.Group>
+							
+							<Form.Group>
+							<Form.Label className="form-label">Date
+							<form className={classes.container} noValidate>
+								<TextField
+									id="date"
+									type="date"
+									defaultValue="2017-05-24"
+									className={classes.textField}
+									InputLabelProps={{
+									shrink: true,
+									}}
+									onChange={(e) => setDate(e.target.value)}
+								/>
+							</form>
+							</Form.Label>
+							</Form.Group>
 
-				<Form.Group>
-				<DatePicker
-					selected={date}
-					onChange={date => setDate(date)}
-					customInput={<ExampleCustomInput />}
-				/>
-				</Form.Group>
+							<Form.Group controlId="amount">
+							<Form.Label className="form-label">Amount</Form.Label>
+							<div className="cont">
+								<input 
+									className="effect-2"
+									type="text" 
+									placeholder="0" 
+									value={amount}
+									onChange={(e) => setAmount(e.target.value)}
+									required
+								/>
+								<span class="focus-border"></span>
+							</div>
+							</Form.Group>
 
-				<Form.Group controlId="amount">
-					<Form.Label>Amount</Form.Label>
-					<Form.Control 
-						type="text" 
-						placeholder="Amount" 
-						value={amount}
-						onChange={(e) => setAmount(e.target.value)}
-						required
-					/>
-				</Form.Group>
+							<Form.Group controlId="category">
+							<Form.Label className="form-label">Category</Form.Label>
+							<div className="cont">
+								<input
+									className="effect-2"
+									type="text" 
+									placeholder="Category" 
+									value={category}
+									onChange={(e) => setCategory(e.target.value)}
+									required
+								/>
+								<span class="focus-border"></span>
+							</div>
+						</Form.Group>
 
-				<Form.Group controlId="category">
-					<Form.Label>Category</Form.Label>
-					<Form.Control 
-						type="text" 
-						placeholder="Category" 
-						value={category}
-						onChange={(e) => setCategory(e.target.value)}
-						required
-					/>
-				</Form.Group>
-				
-				{/* <Form.Group>
-					<DropdownButton id="category dropdown" title="Category">
-					{categoriesArray.map(category => {
-						return (
-							<Dropdown.Item value={category} selected={category}>{category}</Dropdown.Item>
-						)
-					})}
-					</DropdownButton>
-				</Form.Group> */}
-				
+						<Form.Group controlId="description">
+						<Form.Label className="form-label">Description</Form.Label>
+						<div className="cont">
+							<input
+								className="effect-2"
+								type="text" 
+								placeholder="Description" 
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								required
+							/>
+							<span class="focus-border"></span>
+							</div>
+						</Form.Group>
 
-				<Button className="bg-primary" type="submit">
-					Submit
-				</Button>
-			</Form>
-		</React.Fragment>
+						<Button id="submitform" type="submit" style={{display: "none"}}>Submit</Button>
+                        <center><label className="submitfrmbtn" htmlFor="submitform">Submit</label>
+							<Link href='/transactions'>
+							<label className="loginbtn">Back</label>
+							</Link>
+							</center>
+						
+					</Form>
+				</div>
+			</React.Fragment>
 	)
 }
 

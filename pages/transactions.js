@@ -1,8 +1,9 @@
 import {useState, useEffect, useRef} from 'react';
-import {Table, Row, Col, Alert} from 'react-bootstrap';
+import {Alert, Container, Row, Col} from 'react-bootstrap';
 import moment from 'moment';
 
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function history({data}) {
 
@@ -10,8 +11,14 @@ export default function history({data}) {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [searchItem, setSearchItem] = useState([]);
+	const [incomeArr, setIncomeArr] = useState([]);
+	const [expenseArr, setExpenseArr] = useState([]);
+	const [totalIncome, setTotalIncome] = useState(0);
+	const [totalExpenses, setTotalExpenses] = useState(0);
+	const [balance, setBalance] = useState(0);
 	const handleChange = e => {
-		setSearchTerm(e.target.value).then(dynamicSearch())
+		setSearchTerm(e.target.value)
+		dynamicSearch()
 	}
 
     useEffect(() => {
@@ -30,6 +37,30 @@ export default function history({data}) {
 			}
 		})
 	}, [])
+
+	useEffect (() => {
+		const amounts = overview.forEach(data => {
+			if (data.type === "Income") {
+				incomeArr.push(data.amount)
+			} else {
+				expenseArr.push(data.amount)
+			}
+		})
+			console.log(incomeArr)
+			console.log(expenseArr)
+
+			let totali = incomeArr.reduce((num1, num2, index)=>num1+num2,0)
+			setTotalIncome(totali);
+
+			let totale = expenseArr.reduce((num1, num2, index)=>num1+num2,0)
+			setTotalExpenses(totale);
+
+			let bal = totali - totale
+			setBalance(bal);
+
+	}, [overview])
+
+	
 	
 	const dynamicSearch = () => {
 		const searchItem = overview.filter(record => 
@@ -62,67 +93,99 @@ export default function history({data}) {
 
 	const filtered = searchItem.map(data => {
 		return (
-			<tr key={data._id}>
-                <td>{data.type}</td>
-                <td>{data.amount}</td>
-                <td>{data.category}</td>
-				<td>{moment(data.date).utc().format('MMMM DD YYYY')}</td>
-			</tr>
-		)
-	})
-    
-    const content = overview.map(data => {
-		return (
-			<tr key={data._id}>
-                <td>{data.type}</td>
-                <td>{data.amount}</td>
-                <td>{data.category}</td>
-				<td>{moment(data.date).utc().format('MMMM DD YYYY')}</td>
-			</tr>
+			<Container key={data._id}>
+				<div className="recordbg" key={data._id}>
+					<div>
+						<span className="rectype">{data.type}</span>
+						<span className="recdate">{moment(data.date).utc().format('MMMM DD YYYY')}</span>
+					</div>
+					<div>
+						<span className="reccat">{data.category}</span>
+						<span className="recamount">{data.amount}</span>
+					</div>
+					<p className="recdescription">"sept sahod"</p>
+				</div>
+			</Container>
 		)
 	})
 
+	const content = overview.map(data => {
+		return (
+			<div className="recordcont">
+				<div className="recordbg" key={data._id}>
+					<div>
+						<span className="rectype">{data.type}</span>
+						<span className="recdate">{moment(data.date).utc().format('MMMM DD YYYY')}</span>
+					</div>
+					<div>
+						<span className="reccat">{data.category}</span>
+						<span className="recamount">
+							{ (data.type === "Income")
+							?
+							`+${data.amount}`
+							:
+							`-${data.amount}`
+							}
+						</span>
+					</div>
+					<p className="recdescription">{data.description}</p>
+				</div>
+			</div>
+		)
+	})
+	
+    
 	return (
 		<React.Fragment>
-			<Head>
-				<title>Transaction Overview</title>
-			</Head>
-			<div>
-				<input
-					type="text"
-					placeholder="Search"
-					value={searchTerm}
-					onChange={handleChange}
-				/>
-
-				<Row>
-					<Col xs={12} lg={8}>
+		<Row>
+			<Col xs={12} lg={5}>
+				<Head>
+					<title>Overview</title>
+				</Head>
+				<div className="recordformcontainer">
+					<div className="formhead">Transaction Overview</div>
+					<div className="displaycont">
+						<div class="display">
+							<p>Income</p>
+							<p style={{fontSize: '25px'}}>{totalIncome}</p>
+						</div>
+						<div class="display">
+							<p>Expenses</p>
+							<p style={{fontSize: '25px'}}>{totalExpenses}</p>
+						</div>
+						<div class="display">
+							<p>Balance</p>
+							<p style={{fontSize: '25px'}}>{balance}</p>
+						</div>
+					</div>
+				</div>
+			</Col>
+			<Col xs={12} lg={7}>
+				<div className="bar">
+					Search: &nbsp;
+					<input
+						className="effect-2"
+						type="text"
+						value={searchTerm}
+						onChange={handleChange}
+					/>
+					<Link href="/addtransactions">
+						<a className="signupbtn">+</a>
+					</Link>
+				</div>
 						{overview.length > 0
 						?
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th>Type</th>
-									<th>Amount</th>
-									<th>Category</th>
-									<th>Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								{(searchTerm === '')
+								(searchTerm === '')
 								?
 								content
 								:
 								filtered
-								}
-							</tbody>
-						</Table>
+								
 						:
 						<Alert variant="info">You have no transactions yet.</Alert>
 						}
-					</Col>
-				</Row>
-			</div>
+			</Col>
+		</Row>
 		</React.Fragment>
 	)
 }

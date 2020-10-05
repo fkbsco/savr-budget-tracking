@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
+
+import Link from 'next/link'
 import Router from 'next/router'
+
+import Footer from '../components/Footer'
 
 export default function signup() {
     
@@ -68,97 +72,124 @@ export default function signup() {
 
     return (
         <React.Fragment>
-            <Form onSubmit={e => registerUser(e)} className="col-lg-4 offset-lg-4 my-5">
-			<Form.Group>
-				<Form.Label>First Name</Form.Label>
-				<Form.Control 
-					type="text"
-					placeholder="Input first name"
-					value={firstName}
-					onChange={e => setFirstName(e.target.value)}
-					required
-				/>
-			</Form.Group>
+			<div className="signupformcontainer">
+				<div className="formhead">Register</div>
+					<Form onSubmit={e => registerUser(e)}>
+					<Form.Group>
+						<Form.Label className="form-label">First Name</Form.Label>
+						<div className="cont">
+							<input 
+								type="text"
+								className="effect-2"
+								placeholder="Input first name"
+								value={firstName}
+								onChange={e => setFirstName(e.target.value)}
+								required
+							/>
+                        <span class="focus-border"></span>
+                        </div>
+					</Form.Group>
 
-			<Form.Group>
-				<Form.Label>Last Name</Form.Label>
-				<Form.Control 
-					type="text"
-					placeholder="Input last name"
-					value={lastName}
-					onChange={e => setLastName(e.target.value)}
-					required
-				/>
-			</Form.Group>
+					<Form.Group>
+						<Form.Label className="form-label">Last Name</Form.Label>
+						<div className="cont">
+						<input
+							type="text"
+							className="effect-2"
+							placeholder="Input last name"
+							value={lastName}
+							onChange={e => setLastName(e.target.value)}
+							required
+						/>
+						<span class="focus-border"></span>
+						</div>
+					</Form.Group>
 
-			<Form.Group>
-				<Form.Label>Email Address</Form.Label>
-				<Form.Control 
-					type="email"
-					placeholder="Enter email"
-					value={email}
-					onChange={e => setEmail(e.target.value)}
-					required
-				/>
-				<Form.Text className="text-muted">
-					We'll never share your email with anyone else.
-				</Form.Text>
-			</Form.Group>
+					<Form.Group>
+						<Form.Label className="form-label">Email Address</Form.Label>
+						<div className="cont">
+						<input
+							type="email"
+							className="effect-2"
+							placeholder="Input email address"
+							value={email}
+							onChange={e => setEmail(e.target.value)}
+							required
+						/>
+						<span class="focus-border"></span>
+						</div>
+						<Form.Text className="text-muted">
+							We'll never share your email with anyone else.
+						</Form.Text>
+					</Form.Group>
 
-            <Form.Group>
-				<Form.Label>Mobile No.</Form.Label>
-				<Form.Control 
-					type="number"
-					placeholder="Input 11 digit mobile number"
-					value={mobileNo}
-					onChange={e => setMobileNo(e.target.value)}
-					required
-				/>
-			</Form.Group>
+					<Form.Group>
+						<Form.Label className="form-label">Mobile No.</Form.Label>
+						<div className="cont">
+						<input 
+							type="number"
+							className="effect-2"
+							placeholder="Input 11 digit mobile number"
+							value={mobileNo}
+							onChange={e => setMobileNo(e.target.value)}
+							required
+						/>
+						<span class="focus-border"></span>
+						</div>
+						<Form.Text className="text-muted">
+							We'll never share your number with anyone else.
+						</Form.Text>
+					</Form.Group>
 
-			<Form.Group>
-				<Form.Label>Password</Form.Label>
-				<Form.Control 
-					type="password"
-					placeholder="Password"
-					value={password1}
-					onChange={e => setPassword1(e.target.value)}
-					required
-				/>
-			</Form.Group>
+					<Form.Group>
+						<Form.Label className="form-label">Password</Form.Label>
+						<div className="cont">
+						<input
+							type="password"
+							className="effect-2"
+							placeholder="Password"
+							value={password1}
+							onChange={e => setPassword1(e.target.value)}
+							required
+						/>
+						<span class="focus-border"></span>
+						</div>
+					</Form.Group>
 
-			<Form.Group>
-				<Form.Label>Verify Password</Form.Label>
-				<Form.Control 
-					type="password"
-					placeholder="Verify Password"
-					value={password2}
-					onChange={e => setPassword2(e.target.value)}
-					required
-				/>
-			</Form.Group>
+					<Form.Group>
+						<Form.Label className="form-label">Verify Password</Form.Label>
+						<div className="cont">
+						<input
+							type="password"
+							className="effect-2"
+							placeholder="Verify Password"
+							value={password2}
+							onChange={e => setPassword2(e.target.value)}
+							required
+						/>
+						<span class="focus-border"></span>
+						</div>
+					</Form.Group>
 
-			{isActive
-				?
-				<Button 
-					className="bg-primary"
-					type="submit"
-					id="submitBtn"
-				>
-					Submit
-				</Button>
-				:
-				<Button 
-					className="bg-danger"
-					type="submit"
-					id="submitBtn"
-					disabled
-				>
-					Submit
-				</Button>
-			}
-			
-		</Form>
-        </React.Fragment>
+					<Button id="submitform" type="submit" style={{display: "none"}}>Submit</Button>
+					{isActive
+						?
+						<center><label className="submitfrmbtn" htmlFor="submitform">
+                            Submit
+                        </label></center>
+						:
+						<center><label className="submitfrmbtndisabled" htmlFor="submitform" disabled>
+                            Submit
+                        </label></center>
+					}
+					<p className="formsubhead">Already have an account? &nbsp;
+                            <Link href="/login">
+                                <a className="link">Login</a>
+                            </Link>
+                        </p>
+				</Form>
+		</div>
+		<Footer />
+    	</React.Fragment>
     )
 }
