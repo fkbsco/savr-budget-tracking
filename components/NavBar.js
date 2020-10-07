@@ -22,27 +22,24 @@ export default function NavBar() {
                     {(user.id !== null)
                         ? <React.Fragment>
                             <Link href="/profile">
-                                <a class="userlinks" role="button">Profile</a>
+                                <a className="userlinks" role="button">Profile</a>
                             </Link>
                             <Link href="/transactions">
-                                <a class="userlinks" role="button">Overview</a>
+                                <a className="userlinks" role="button">Overview</a>
                             </Link>
                             <Link href="/insights">
-                                <a class="userlinks" role="button">Insights</a>
-                            </Link>
-                            <Link href="/categories">
-                                <a class="userlinks" role="button">Categories</a>
+                                <a className="userlinks" role="button">Insights</a>
                             </Link>
                             <Link href="/logout">
-                                <a class="userlinks" role="button">Logout</a>
+                                <a className="userlinks" role="button">Logout</a>
                             </Link>
                         </React.Fragment>
                         : <React.Fragment>
                             <Link href='/login'>
-                                <a class="loginbtn" role="button">Login</a>
+                                <a className="loginbtn" role="button">Login</a>
                             </Link>
                             <Link href='/signup'>
-                                <a class="signupbtn" role="button">Sign Up</a>
+                                <a className="signupbtn" role="button">Sign Up</a>
                             </Link>
                         </React.Fragment>
                     }

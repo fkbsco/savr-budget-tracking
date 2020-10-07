@@ -5,9 +5,9 @@ import {GoogleLogin} from 'react-google-login';
 import Router from 'next/router'
 import Link from 'next/link'
 
-import OnePageFooter from '../components/OnePageFooter'
+import OnePageFooter from '../../components/OnePageFooter'
 
-import UserContext from '../UserContext'
+import UserContext from '../../UserContext'
 
 export default function index() {
     return(

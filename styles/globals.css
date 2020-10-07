@@ -27,8 +27,8 @@ a {
   box-sizing: border-box;
 }
 
-/* own styling */
-/* GENERAL */
+/*** own styling ***/
+/** GENERAL **/
 .link {
   color: #305942;
 }
@@ -38,7 +38,7 @@ a {
   color: #3d7254;
 }
 
-/* BANNER */
+/** BANNER **/
 .webban {
   height: 89vh;
 }
@@ -54,7 +54,19 @@ a {
   display: none;
 }
 
-/* CUSTOM BUTTONS */
+/** CATEGORIES **/
+.categoriesformcontainer {
+  width: 30%;
+  align-content: center;
+  margin: auto;
+  border-radius: 25px;
+  border: 2px  #6b997f solid;
+  padding: 30px 15px;
+  box-shadow: 5px 5px 5px #adb8b1;
+}
+
+
+/** CUSTOM BUTTONS **/
 .loginbtn {
   border-color: #305942;
   border: 1px solid;
@@ -157,7 +169,88 @@ a {
   font-size: 20px;
 }
 
-/* FEATURES */
+.editbtn, .deletebtn {
+  border-color: #424242;
+  border: 1px solid;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+  transition-timing-function: ease;
+  color: #424242;
+  font-size: 30px;
+  padding: 5px;
+  margin: 5px 0;
+  text-align: center;
+  z-index: 999999;
+}
+
+.editbtn:hover, .deletebtn:hover {
+  border-color: #305942;
+  border: 1px solid;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+  transition-timing-function: ease;
+  background-color: #305942;
+  color: #ffffff;
+  font-size: 30px;
+  padding: 5px;
+  margin: 5px 0;
+  text-align: center;
+  z-index: 999999;
+}
+
+.editprofilebtn {
+  border-color: #305942;
+  border: 1px solid;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+  transition-timing-function: ease;
+  color: #305942;
+  padding: 12px 20px;
+  margin: auto auto 10px auto;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  z-index: 99999;
+  background-color: white;
+}
+
+.editprofilebtn:hover {
+  border-color: #305942;
+  border: 1px solid;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #305942;
+}
+
+.submitfrmeditbtn {
+  border-color: #305942;
+  border: 1px solid;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+  transition-timing-function: ease;
+  background-color: #305942;
+  color: #ffffff;
+  padding: 12px 20px;
+  margin: 10px 5px;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  z-index: 999999;
+  width: auto;
+}
+
+.submitfrmeditbtn:hover {
+  border-color: #305942;
+  border: 1px solid;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #3d7254;
+}
+
+
+/** FEATURES **/
 .cards {
   padding: 0 20px;
   text-align: center;
@@ -194,7 +287,7 @@ a {
   margin-bottom: 30px;
 }
 
-/* FOOTER */
+/** FOOTER **/
 .footer {
   font-size: 14px;
   font-family: 'Montserrat', sans-serif;
@@ -224,7 +317,7 @@ a {
 }
 
 
-/* FORMS */
+/** FORMS **/
 /* GENERAL */
 .formhead {
   font-size: 35px;
@@ -246,7 +339,17 @@ a {
   color: #424242;
   font-family: 'Montserrat', sans-serif;
   margin: 0 15%;
-   
+}
+
+.dropdown {
+  width: 70%;
+  margin: 0 15%;
+  padding: 5px;
+  border: #ccc 1px solid;
+}
+
+option:hover {
+  background-color: #6b997f;
 }
 
 /* necessary to give position: relative to parent. */
@@ -289,7 +392,18 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
   margin: 0 15%;
 }
 
-/* NAVBAR */
+/* TRANSACTION */
+.addtransformcontainer {
+  width: 30%;
+  align-content: center;
+  margin: auto auto 25px auto;
+  border-radius: 25px;
+  border: 2px  #6b997f solid;
+  padding: 30px 15px;
+  box-shadow: 5px 5px 5px #adb8b1;
+}
+
+/** NAVBAR **/
 .navi {
   height: 11vh;
 }
@@ -316,9 +430,40 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
   color: #3d7254;
 }
 
-/* TRANSACTIONS */
+/** PROFILE **/
+.profilecont {
+  height: 75vh;
+  background-color: rgba(219, 219, 219, 0.5);
+  margin: 10px auto;
+}
+
+.sidebar {
+  height: 75vh;
+  background-image: linear-gradient(95deg, #bee6d2, #72db99);
+}
+
+.sidebarimg {
+  width: 70%;
+  margin: 30px auto 10px auto;
+  border-radius: 100%;
+}
+
+.sidebarname {
+  font-size: 30px;
+  text-align: center;
+  font-family: 'Playfair Display', sans-serif;
+  margin: 10px auto;
+  color: #424242;
+}
+
+.editformcont {
+  margin: 50px auto;
+}
+
+/** TRANSACTIONS **/
 .displaycont {
   text-align: center;
+  margin-bottom: 12px;
 }
 
 .display {
@@ -331,9 +476,25 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
 }
 
 .bar{
-  text-align: center;
-  width:70%;
-  margin: auto auto 20px auto;
+  width: 50%;
+  margin: auto 5px 20px auto;
+  text-align: right;
+}
+
+.dropdownsearch {
+  width: 70%;
+  padding: 5px;
+}
+
+.dropdowncont {
+  width: 20%;
+  margin: auto auto 20px 2px;
+}
+
+.searchDrop {
+  display: flex;
+  justify-content: center;
+  padding-right: 80px;
 }
 
 .transcont {
@@ -350,11 +511,19 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
 .recordbg{
   width: 100%;
   margin: auto;
-  background-color: rgba(107, 153, 127, 0.5);
+  background-color: rgba(149, 199, 152, 0.6);
   border: 1px solid rgba(194, 194, 194, 0.5);
   margin-bottom: 10px;
   border-radius: 5px;
   padding: 7px 80px;
+}
+
+.recordscontainer {
+  width: 80%;
+  margin: auto;
+  height: 60vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .rectype {
@@ -385,19 +554,29 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
 }
 
 .recordformcontainer {
-  width: 70%;
+  width: 75%;
   align-content: center;
-  margin: auto;
+  margin: 50px auto auto 100px;
   border-radius: 25px;
   border: 2px  #6b997f solid;
   padding: 30px 15px;
   box-shadow: 5px 5px 5px #adb8b1;
 }
 
-/* MEDIA ONLY */
+.editDeleteMobile {
+  display: none;
+}
+
+.radiotrans {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+/*** MEDIA ONLY ***/
 @media only screen and (max-width: 1024px) {
   
-  /* BANNER */
+  /** BANNER **/
   .webban {
     display: none;
   }
@@ -414,7 +593,7 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
     border-radius: 100px;
   }
 
-  /* CUSTOM BUTTONS */
+  /** CUSTOM BUTTONS **/
   .loginbtn {
     border-color: #305942;
     border: 1px solid;
@@ -434,13 +613,44 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
     background-color: #3d7254;
   }
 
-   /* FEATURES */
+  .editbtn, .deletebtn {
+    border-color: #424242;
+    border: 1px solid;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s;
+    transition-timing-function: ease;
+    color: #424242;
+    font-size: 15px;
+    padding: 5px;
+    margin: auto 5px;
+    text-align: center;
+    z-index: 999999;
+  }
+  
+  .editbtn:hover, .deletebtn:hover {
+    border-color: #305942;
+    border: 1px solid;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s;
+    transition-timing-function: ease;
+    background-color: #305942;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 5px;
+    margin: auto 5px;
+    text-align: center;
+    z-index: 999999;
+  }
+
+   /** FEATURES **/
    .group {
     padding: 0 20px;
     margin: 0 20px;
   }
 
-  /* FOOTER */
+  /** FOOTER **/
   .footer {
     height: auto;
   }
@@ -450,7 +660,7 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
     height: auto;
   }
 
-  /* FORM */
+  /** FORM **/
   .loginformcontainer {
     width: 100%;
     align-content: center;
@@ -467,6 +677,14 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
     height: auto;
   }
 
+  .addtransformcontainer {
+    width: 100%;
+    align-content: center;
+    margin: auto auto 25px auto;
+    padding: 30px 15px;
+    height: auto;
+  }
+
   .googlebtn {
     justify-content: center; 
     text-align: center;
@@ -477,7 +695,7 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
     font-size: 20px;
   }
   
-  /* NAVBAR */
+  /** NAVBAR **/
   .userlinks {
     border-color: #305942;
     border: 1px solid;
@@ -492,5 +710,132 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     z-index: 999999;
+  }
+
+  /** PROFILE **/
+  .profilecont {
+  height: auto;
+  background-color: rgba(223, 242, 231, 0.4);
+  margin: 10px auto;
+  }
+
+  .sidebar {
+  background-color: rgba(115, 189, 118, 0.7);
+  height: 70vh;
+  }
+
+  /** TRANSACTIONS **/
+  .recordformcontainer {
+    width: 100%;
+    align-content: center;
+    margin: 25px auto;
+    border-radius: 25px;
+    border: 2px  #6b997f solid;
+    padding: 30px 15px;
+    box-shadow: 5px 5px 5px #adb8b1;
+    position: static;
+  }
+
+  .displaycont {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .display {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 19px;
+    color: #424242;
+    display: inline-block;
+    margin: 0 25px;
+  }
+  
+  .bar{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .dropdownsearch {
+    width: 100%;
+    margin: auto;
+  }
+  
+  .dropdowncont {
+    width: 80%;
+    margin: 15px auto;
+    text-align: center;
+  }
+  
+  .searchDrop {
+    display: block;
+    margin: auto;
+    text-align: center;
+    padding: 0;
+  }
+  
+  .transcont {
+    margin: auto;
+    align-content: center;
+    margin: auto;
+    margin-bottom: 30px;
+    border-radius: 25px;
+    border: 2px  #6b997f solid;
+    padding: 30px 0;
+    box-shadow: 5px 5px 5px #adb8b1;
+  }
+  
+  .recordbg{
+    width: 100%;
+    margin: auto;
+    background-color: rgba(149, 199, 152, 0.6);
+    border: 1px solid rgba(194, 194, 194, 0.5);
+    border-radius: 5px;
+    padding: 7px 20px;
+  }
+  
+  .recordscontainer {
+    width: 80%;
+    margin: auto;
+    height: 60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  .rectype {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    color: #424242;
+  }
+  
+  .reccat, .recdescription {
+    font-size: 15px;
+    color: #424242;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .recdate {
+    float:right;
+    font-size: 15px;
+    color: #424242;
+    font-family: 'Montserrat', sans-serif;
+    padding:10px 0 0 0 ;
+  }
+  
+  .recamount {
+    float:right;
+    font-size: 15px;
+    color: #424242;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .editDeleteMobile {
+    display: block;
+    text-align: right;
+    margin: 10px;
+  }
+
+  .editDelete {
+    display: none;
   }
 }

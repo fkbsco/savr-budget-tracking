@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import UserContext from '../UserContext'
+import UserContext from '../../UserContext'
 import Router from 'next/router'
 
 export default function logout() {
@@ -11,4 +11,4 @@ export default function logout() {
         Router.push('/login');
     },[])
     return null;
-}
+} 

@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap'
 import Link from 'next/link'
 import Router from 'next/router'
 
-import Footer from '../components/Footer'
+import Footer from '../../components/Footer'
 
 export default function signup() {
     
