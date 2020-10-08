@@ -2,6 +2,8 @@ import { useState, useContext } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import {GoogleLogin} from 'react-google-login';
 
+import Swal from 'sweetalert2'
+
 import Router from 'next/router'
 import Link from 'next/link'
 
@@ -46,7 +48,25 @@ const LoginForm = () => {
                 localStorage.setItem('token', data.accessToken)
                 retrieveUserDetails(data.accessToken)
             } else {
-                return false
+                if (data.error === 'does-not-exist') {
+                    Swal.fire(
+                        'Authentication Failed', //header
+                        'User does not exist.', //message
+                        'error' //status
+                    )
+                } else if(data.error === 'incorrect-password') {
+                    Swal.fire(
+                        'Authentication Failed',
+                        'Password is incorrect',
+                        'error'
+                    )
+                } else if (data.error === 'login-type-error') {
+                    Swal.fire(
+                        'Login Type Error',
+                        'You may have registered through a different login procedure',
+                        'error'
+                    )
+                }
             }
         })
     }

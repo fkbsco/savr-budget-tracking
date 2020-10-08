@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import {Pie} from 'react-chartjs-2'
 import {colorRandomizer} from '../helpers'
 
+import moment from 'moment'
+
 export default function IncomePieChart({allData}){
 
 	const [incomeCats, setIncomeCats] = useState([]);
@@ -13,7 +15,7 @@ export default function IncomePieChart({allData}){
 	let iCat = []
 	
     allData.forEach(element => {
-		if (element.type === 'Income') {
+		if (element.type === 'Income' && moment(element.date).utc().month() === moment(Date.now()).month()) {
 			if(!iCat.find(category => category === element.category)) {
 				iCat.push(element.category)
 			}
@@ -73,7 +75,18 @@ export default function IncomePieChart({allData}){
 		}]
 	}
 
+	const config = {
+		legend: {
+			display: true,
+			position: 'right',
+			labels: {
+				boxWidth: 25,
+				fontSize: 15
+			}
+		}
+	}
+
 	return (
-		<Pie data={data} />
+		<Pie data={data} options={config}/>
 	)
 }

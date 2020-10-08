@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import {Alert, Container, Row, Col, Form} from 'react-bootstrap';
+import {Alert, Button, Row, Col, Form, Modal, Table} from 'react-bootstrap';
 import moment from 'moment';
 
 import Head from 'next/head'
@@ -15,7 +15,8 @@ export default function history({data}) {
 
 	const [overview, setOverview] = useState([]);
 	const [reserve, setReserve] = useState([]);
-	const [forBalance, setForBalance] = useState([])
+	const [forBalance, setForBalance] = useState([]);
+	const [myCategories, setMyCategories] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchItem, setSearchItem] = useState([]);
 	const [incomeArr, setIncomeArr] = useState([]);
@@ -24,10 +25,12 @@ export default function history({data}) {
 	const [totalExpenses, setTotalExpenses] = useState(0);
 	const [balance, setBalance] = useState(0);
 	const [searchFilter, setSearchFilter] = useState('byCat');
-	const [typeFilter, setTypeFilter] = useState('All');
-	// const [filteredIncome, setFilteredIncome] = useState([]);
-	// const [filteredExpense, setFilteredExpense] = useState([]);
-	// const [shown, setShown] = useState([]);
+	const [typeFilter, setTypeFilter] = useState('');
+	const [show, setShow] = useState(false);
+	// const [categoryId, setCategoryId] = useState('');
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 	const handleChange = e => {
 		setSearchTerm(e.target.value)
 	}
@@ -40,16 +43,46 @@ export default function history({data}) {
 		})
 		.then(res => res.json())
 		.then(data => {
-            console.log(data.transactions)
+			console.log(data.transactions)
+			// setCategoryId(data._id)
 			if (data._id){
 				setOverview(data.transactions)
 				setReserve(data.transactions)
 				setForBalance(data.transactions)
+				setMyCategories(data.categories)
 			} else {
 				setOverview([])
 			}
 		})
 	}, [])
+
+	// function deleteCategory(categoryId) {
+	// 	fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${categoryId}`, {
+	// 		method: 'DELETE',
+	// 		headers: {
+	// 			'Authorization': `Bearer ${localStorage.getItem('token')}`
+	// 		}
+	// 	})
+	// 	.then(res => {
+	// 		return res.json()
+	// 	})
+	// 	.then(data => {
+	// 		// if course was archived successfully
+	// 		if(data === true){
+	// 			Swal.fire(
+	// 				'Category Deleted',
+	// 				'You have successfully deleted the category.',
+	// 				'success'
+	// 			)
+	// 		} else {
+	// 			Swal.fire(
+	// 				'Oops',
+	// 				'We encountered a problem. Please try again.',
+	// 				'error'
+	// 			)
+	// 		}
+	// 	})
+	// }
 
 	useEffect (() => {
 		const amounts = forBalance.forEach(data => {
@@ -73,6 +106,94 @@ export default function history({data}) {
 
 	}, [forBalance])
 
+	const filtered = searchItem.map(data => {
+		return (
+			<React.Fragment>
+			<Row>
+				<Col sm={12} lg={12}>
+					<div className="recordbg" key={data._id}>
+						<div>
+							<span className="rectype">{data.type}</span>
+							<span className="recdate">{moment(data.date).utc().format('MMMM DD YYYY')}</span>
+						</div>
+						<div>
+							<span className="reccat">{data.category}</span>
+							<span className="recamount">
+								{ (data.type === "Income")
+								?
+								`+ ${data.amount}`
+								:
+								`- ${data.amount}`
+								}
+							</span>
+						</div>
+						<p className="recdescription">"{data.description}"</p>
+					</div>
+				</Col>
+				{/* <Col sm={12} lg={1}>
+					<div className="editDelete">
+						<FontAwesomeIcon icon ={faMinus} className="deletebtn"/>
+					</div>
+					<div>
+					<div className="editDeleteMobile">
+						<span className="deletebtn">Delete</span>
+					</div>
+					</div>
+				</Col> */}
+			</Row>
+			</React.Fragment>
+		)
+	})
+
+	const content = overview.map(data => {
+		return (
+			<React.Fragment>
+			<Row>
+				<Col sm={12} lg={12}>
+					<div className="recordbg" key={data._id}>
+						<div>
+							<span className="rectype">{data.type}</span>
+							<span className="recdate">{moment(data.date).utc().format('MMMM DD YYYY')}</span>
+						</div>
+						<div>
+							<span className="reccat">{data.category}</span>
+							<span className="recamount">
+								{ (data.type === "Income")
+								?
+								`+ ${data.amount}`
+								:
+								`- ${data.amount}`
+								}
+							</span>
+						</div>
+						<p className="recdescription">"{data.description}"</p>
+					</div>
+				</Col>
+				{/* <Col sm={12} lg={1}>
+					<div className="editDelete">
+						<FontAwesomeIcon icon ={faMinus} className="deletebtn"/>
+					</div>
+					<div>
+					<div className="editDeleteMobile">
+						<span className="deletebtn">Delete</span>
+					</div>
+					</div>
+				</Col> */}
+			</Row>
+			</React.Fragment>
+		)
+	})
+
+	const manageCats = myCategories.map(indivCats => {
+		return (
+			<tr key={indivCats._id}>
+				<td>{indivCats.type}</td>
+				<td>{indivCats.name}</td>
+				{/* <td><a className="loginbtn">Delete</a>
+				</td> */}
+			</tr>
+		)
+	})
 
 	const filterIncome = () => {
 		const view = reserve.map(item => item)
@@ -113,7 +234,7 @@ export default function history({data}) {
 		} else if (searchFilter === "byDesc") {
 			dynamicSearchDesc()
 		}
-	}, [searchTerm]);
+	}, [searchTerm, typeFilter, overview]);
 
 	useEffect(() => {
 		if (typeFilter === "All") {
@@ -123,91 +244,7 @@ export default function history({data}) {
 		} else if (typeFilter === "Expense") {
 			filterExpense()
 		}
-	}, [typeFilter])
-	
-
-	const filtered = searchItem.map(data => {
-		return (
-			<React.Fragment>
-			<Row>
-				<Col sm={12} lg={11}>
-					<div className="recordbg" key={data._id}>
-						<div>
-							<span className="rectype">{data.type}</span>
-							<span className="recdate">{moment(data.date).utc().format('MMMM DD YYYY')}</span>
-						</div>
-						<div>
-							<span className="reccat">{data.category}</span>
-							<span className="recamount">
-								{ (data.type === "Income")
-								?
-								`+ ${data.amount}`
-								:
-								`- ${data.amount}`
-								}
-							</span>
-						</div>
-						<p className="recdescription">"{data.description}"</p>
-					</div>
-				</Col>
-				<Col sm={12} lg={1}>
-					<div className="editDelete">
-						<FontAwesomeIcon icon ={faPen} className="editbtn"/>
-						<FontAwesomeIcon icon ={faMinus} className="deletebtn"/>
-					</div>
-					<div>
-					<div className="editDeleteMobile">
-						<span className="editbtn">Edit</span>
-						<span className="deletebtn">Delete</span>
-					</div>
-					</div>
-				</Col>
-			</Row>
-			</React.Fragment>
-		)
-	})
-
-	const content = overview.map(data => {
-		return (
-			<React.Fragment>
-			<Row>
-				<Col sm={12} lg={11}>
-					<div className="recordbg" key={data._id}>
-						<div>
-							<span className="rectype">{data.type}</span>
-							<span className="recdate">{moment(data.date).utc().format('MMMM DD YYYY')}</span>
-						</div>
-						<div>
-							<span className="reccat">{data.category}</span>
-							<span className="recamount">
-								{ (data.type === "Income")
-								?
-								`+ ${data.amount}`
-								:
-								`- ${data.amount}`
-								}
-							</span>
-						</div>
-						<p className="recdescription">"{data.description}"</p>
-					</div>
-				</Col>
-				<Col sm={12} lg={1}>
-					<div className="editDelete">
-						<FontAwesomeIcon icon ={faPen} className="editbtn"/>
-						<FontAwesomeIcon icon ={faMinus} className="deletebtn"/>
-					</div>
-					<div>
-					<div className="editDeleteMobile">
-						<span className="editbtn">Edit</span>
-						<span className="deletebtn">Delete</span>
-					</div>
-					</div>
-				</Col>
-			</Row>
-			</React.Fragment>
-		)
-	})
-	
+	}, [typeFilter, searchTerm])
     
 	return (
 		<React.Fragment>
@@ -235,9 +272,7 @@ export default function history({data}) {
 						<Link href="/transactions/add">
 							<center><a className="submitfrmbtn">Add Transaction</a></center>
 						</Link><br />
-						<Link href="/categories">
-							<center><a className="submitfrmbtn">Manage Categories</a></center>
-						</Link>
+                        <center><a className="submitfrmbtn" onClick={handleShow}>Manage My Categories</a></center>
 				</div>
 			</Col>
 			<Col xs={12} lg={7}>
@@ -292,11 +327,35 @@ export default function history({data}) {
 							filtered
 							
 					:
-					<Alert variant="info">You have no transactions yet.</Alert>
+					<Alert variant="success">You have no transactions yet.</Alert>
 					}
 				</div>
 			</Col>
 		</Row>
+
+		<Modal show={show} onHide={handleClose}>
+			<Modal.Header closeButton>
+			<Modal.Title className="modallabel">Manage My Categories</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Name</th>
+							{/* <th>Action</th> */}
+						</tr>
+					</thead>
+					<tbody>
+						{ manageCats }
+					</tbody>
+				</Table>
+			</Modal.Body>
+			<Modal.Footer>
+			<a className="loginbtn" onClick={handleClose}>Back</a>
+			</Modal.Footer>
+		</Modal>
+
 		<OnePageFooter />
 		</React.Fragment>
 	)

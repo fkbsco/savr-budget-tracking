@@ -3,7 +3,10 @@ import { Col, Container, Row, Form, Button } from 'react-bootstrap'
 import OnePageFooter from '../../components/OnePageFooter'
 import UserContext from '../../UserContext'
 
+import Swal from 'sweetalert2'
+
 import Link from 'next/link'
+import Head from 'next/head'
 import Router from 'next/router'
 
 export default function Profile() {
@@ -38,6 +41,11 @@ export default function Profile() {
         .then(data => {
             if (data === true) {
                 unsetUser()
+                Swal.fire(
+                    'Update successful',
+                    'Details have been successfully updated. Please login again.',
+                    'success'
+                )
                 Router.push('/login')
             } else {
                 console.log(data)
@@ -56,13 +64,16 @@ export default function Profile() {
 			if (data._id){
 				setDetails(data)
 			} else {
-				setOverview([])
+				setDetails([])
 			}
 		})
     }, [])
 
     return (
         <React.Fragment>
+            <Head>
+					<title>User Profile</title>
+				</Head>
             <Container>
                 <div className="profilecont">
                     <Row>
@@ -82,22 +93,7 @@ export default function Profile() {
                                 ?
                                 <div className="editformcont">
                                     <Form onSubmit={e => editAccount(e)}>
-                                        <Form.Group controlId="email">
-                                            <Form.Label className="form-label">Email:</Form.Label>
-                                                <div className="cont">
-                                                <input
-                                                    type="input" 
-                                                    className="effect-2"
-                                                    placeholder={details.email} 
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                    disabled
-                                                />
-                                                <span class="focus-border"></span>
-                                                </div>
-                                            
-                                        </Form.Group>
-
+                                    <p className="form-section">General Information:</p>
                                         <Form.Group controlId="fname">
                                         <Form.Label className="form-label">First name:</Form.Label>
                                             <div className="cont">
@@ -127,6 +123,23 @@ export default function Profile() {
                                             />
                                             <span class="focus-border"></span>
                                             </div>
+                                            
+                                        </Form.Group>
+
+                                        <p className="form-section">Contact Information:</p>
+                                        <Form.Group controlId="email">
+                                            <Form.Label className="form-label">Email:</Form.Label>
+                                                <div className="cont">
+                                                <input
+                                                    type="input" 
+                                                    className="effect-2"
+                                                    placeholder={details.email} 
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    disabled
+                                                />
+                                                <span class="focus-border"></span>
+                                                </div>
                                             
                                         </Form.Group>
 
@@ -209,22 +222,7 @@ export default function Profile() {
                                 :
                                 <div className="editformcont">
                                     <Form onSubmit={e => editAccount(e)}>
-                                        <Form.Group controlId="email">
-                                            <Form.Label className="form-label">Email:</Form.Label>
-                                                <div className="cont">
-                                                <input
-                                                    type="input" 
-                                                    className="effect-2"
-                                                    placeholder={details.email} 
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                    disabled
-                                                />
-                                                <span class="focus-border"></span>
-                                                </div>
-                                            
-                                        </Form.Group>
-
+                                        <p className="form-section">General Information:</p>
                                         <Form.Group controlId="fname">
                                         <Form.Label className="form-label">First name:</Form.Label>
                                             <div className="cont">
@@ -254,6 +252,23 @@ export default function Profile() {
                                             />
                                             <span class="focus-border"></span>
                                             </div>
+                                            
+                                        </Form.Group>
+
+                                        <p className="form-section">Contact Information:</p>
+                                        <Form.Group controlId="email">
+                                            <Form.Label className="form-label">Email:</Form.Label>
+                                                <div className="cont">
+                                                <input
+                                                    type="input" 
+                                                    className="effect-2"
+                                                    placeholder={details.email} 
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    disabled
+                                                />
+                                                <span class="focus-border"></span>
+                                                </div>
                                             
                                         </Form.Group>
 

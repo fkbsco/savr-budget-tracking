@@ -54,17 +54,38 @@ a {
   display: none;
 }
 
-/** CATEGORIES **/
-.categoriesformcontainer {
-  width: 30%;
-  align-content: center;
-  margin: auto;
-  border-radius: 25px;
-  border: 2px  #6b997f solid;
-  padding: 30px 15px;
-  box-shadow: 5px 5px 5px #adb8b1;
+/* CHARTS */
+.piechartscont, .linechartscont {
+  margin: 10px auto 30px auto;
 }
 
+.chartscontainer {
+  width: auto;
+  padding: 20px;
+  margin: auto;
+  background-color: rgba(198, 247, 173, 0.5);
+  box-shadow: 5px 5px 5px #adb8b1;
+  border-radius: 5px;
+}
+
+.chartscontainer:hover {
+  background-color: rgba(198, 247, 173, 0.8);
+}
+
+.chartlabel {
+  font-size: 26px;
+  color: #424242;
+  text-align: center;
+  font-family: 'Playfair Display', sans-serif;
+  margin: 10px auto 2px auto;
+}
+
+.chartsubhead {
+  font-size: 15px;
+  text-align: center;
+  font-family: 'Playfair Display', sans-serif;
+  margin: auto auto 20px auto;
+}
 
 /** CUSTOM BUTTONS **/
 .loginbtn {
@@ -403,6 +424,14 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
   box-shadow: 5px 5px 5px #adb8b1;
 }
 
+/** MODAL **/
+.modallabel {
+  font-size: 50px;
+  color: #424242;
+  font-family: 'Playfair Display', sans-serif;
+  margin: 10px auto 2px auto;
+}
+
 /** NAVBAR **/
 .navi {
   height: 11vh;
@@ -437,6 +466,14 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
   margin: 10px auto;
 }
 
+.form-section{
+  font-size: 15px;
+  font-weight: bold;
+  color: #424242;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 8%;
+}
+
 .sidebar {
   height: 75vh;
   background-image: linear-gradient(95deg, #bee6d2, #72db99);
@@ -457,7 +494,7 @@ input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width
 }
 
 .editformcont {
-  margin: 50px auto;
+  margin: 20px auto;
 }
 
 /** TRANSACTIONS **/
