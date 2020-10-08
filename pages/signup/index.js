@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap'
 
 import Link from 'next/link'
 import Router from 'next/router'
+import Head from 'next/head'
 
 import Footer from '../../components/Footer'
 
@@ -72,6 +73,9 @@ export default function signup() {
 
     return (
         <React.Fragment>
+			<Head>
+					<title>Sign Up</title>
+				</Head>
 			<div className="signupformcontainer">
 				<div className="formhead">Register</div>
 					<Form onSubmit={e => registerUser(e)}>

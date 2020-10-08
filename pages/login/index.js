@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 
 import Router from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 
 import OnePageFooter from '../../components/OnePageFooter'
 
@@ -115,6 +116,9 @@ const LoginForm = () => {
 
     return (
         <React.Fragment>
+            <Head>
+					<title>Login</title>
+				</Head>
             <div className="loginformcontainer">
                 <div className="formhead">Login</div>
                     <Form onSubmit={e => authenticate(e)}>
