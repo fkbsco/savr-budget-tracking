@@ -5,6 +5,8 @@ import Link from 'next/link'
 import Router from 'next/router'
 import Head from 'next/head'
 
+import Swal from 'sweetalert2'
+
 import Footer from '../../components/Footer'
 
 export default function signup() {
@@ -50,12 +52,26 @@ export default function signup() {
                 .then(data => {
 
                     if(data === true){
+						Swal.fire(
+							'Register Successful!',
+							'You have registered successfully! Please login.',
+							'success'
+						)
                         Router.push('/login')
                     }else{
-                        console.log(data)
+                        Swal.fire(
+							'Error',
+							'Something went wrong. Please try again.',
+							'error'
+						)
                     }
                 })
             }else{
+				Swal.fire(
+					'Email Already In Use',
+					'Email is already registered. Please use a different one.',
+					'error'
+				)
                console.log(data)
             }
         })
