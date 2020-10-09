@@ -89,9 +89,13 @@ const AddTransaction = () => {
 	useEffect(() => {
 		addedCats.forEach(cat => {
 			if (cat.type === "Income") {
-				addedIncome.push(cat.name)
-			} else {
-				addedExpense.push(cat.name)
+				if (cat.name !== 'Salary' && cat.name !== 'Dividends' && cat.name !== 'Investment') {
+					addedIncome.push(cat.name)
+				}
+			} else if (cat.type === "Expense") {
+				if (cat.name !== 'Home' && cat.name !== 'Bills' && cat.name !== 'Travel' && cat.name !== 'Food' && cat.name !== 'Transportation' && cat.name !== 'Education') {
+					addedExpense.push(cat.name)
+				}
 			}
 		})
 
